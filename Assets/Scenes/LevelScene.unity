@@ -892,8 +892,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6383db6597bb240805e46f32864196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiManager: {fileID: 7895376}
-  lvManager: {fileID: 1585587727}
+  clockSandTime: 30
+  powerValue: 0
+  luckRate: 0
+  diamondValue: 0
+  rockValue: 0
 --- !u!1 &623664456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1498,8 +1501,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn:
   - {fileID: 686249002198366266, guid: d8bd1df0db7da5c4c82ddb547b6509c9, type: 3}
+  - {fileID: 686249002198366266, guid: c0b7fbfa9689bf540a431e118b494684, type: 3}
   parentObject: {fileID: 1585587726}
-  levelTarget: e8030000b0040000
+  levelTarget: e803000008070000
   levelIndex: 0
 --- !u!1 &1848638280
 GameObject:
