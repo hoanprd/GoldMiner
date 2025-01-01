@@ -5,7 +5,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int clockSandTime, powerValue, luckRate, diamondValue, rockValue;
+    public int clockSandTime, luckRate, diamondValue, rockValue;
+    public float powerValue;
 
     private int score;
     public bool IsGameOver { get; private set; } // Kiểm tra trạng thái game over

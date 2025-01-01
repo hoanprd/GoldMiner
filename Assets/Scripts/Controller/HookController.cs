@@ -114,7 +114,12 @@ public class HookController : MonoBehaviour
         {
             // Lấy khối lượng của vàng để làm chậm tốc độ quay về
             float itemWeight = attached.GetComponent<GoldController>().GetGoldWeight();
-            returnSpeed /= itemWeight; // Vàng nặng làm chậm tốc độ quay về
+            if (PlayerPrefs.GetInt("BuyPower") == 1)
+            {
+                returnSpeed /= itemWeight - GameManager.Instance.powerValue;
+            }
+            else
+                returnSpeed /= itemWeight - (itemWeight * GameManager.Instance.powerValue); // Vàng nặng làm chậm tốc độ quay về
         }
 
         transform.position = Vector3.MoveTowards(transform.position, initialPosition, returnSpeed * Time.deltaTime);
