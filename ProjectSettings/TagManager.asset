@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - hook
+  - gold
+  - diamond
+  - rock
+  - ratGold
+  - ratDiamond
   layers:
   - Default
   - TransparentFX
@@ -40,4 +46,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Hook
+    uniqueID: 2104589993
+    locked: 0
+  - name: String
+    uniqueID: 3942821609
     locked: 0
