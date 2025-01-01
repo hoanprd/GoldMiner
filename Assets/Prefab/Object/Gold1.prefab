@@ -214,12 +214,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldType: 0
+  value: 100
+  weight: 1
   lightGoldValue: 100
   mediumGoldValue: 300
   heavyGoldValue: 600
+  diamondValue: 40
+  packValue: 50
+  lightRockValue: 10
+  mediumRockValue: 20
+  heavyRockValue: 30
   lightGoldWeight: 1
   mediumGoldWeight: 4
   heavyGoldWeight: 8
+  lightRockWeight: 1
+  mediumRockWeight: 2
+  heavyRockWeight: 3
 --- !u!95 &6308403980750705430
 Animator:
   serializedVersion: 5

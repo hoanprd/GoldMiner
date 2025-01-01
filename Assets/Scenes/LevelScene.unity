@@ -169,7 +169,7 @@ MonoBehaviour:
   scoreText: {fileID: 243887966}
   timeText: {fileID: 1253942262}
   levelText: {fileID: 947084337}
-  gameManager: {fileID: 537902882}
+  targetText: {fileID: 154248945}
   timeLimit: 90
 --- !u!1 &149103777
 GameObject:
@@ -972,6 +972,7 @@ MonoBehaviour:
   luckRate: 0
   diamondValue: 0
   rockValue: 0
+  itemHookingIndex: 0
   powerValue: 0.5
 --- !u!1 &623664456
 GameObject:
@@ -1792,7 +1793,7 @@ MonoBehaviour:
   - {fileID: 686249002198366266, guid: d8bd1df0db7da5c4c82ddb547b6509c9, type: 3}
   - {fileID: 686249002198366266, guid: c0b7fbfa9689bf540a431e118b494684, type: 3}
   parentObject: {fileID: 1585587726}
-  levelTarget: e803000008070000
+  levelTarget: e8030000280a0000
   levelIndex: 0
 --- !u!1 &1848638280
 GameObject:
