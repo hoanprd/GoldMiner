@@ -9,6 +9,7 @@ public class HookController : MonoBehaviour
     public float maxAngle = 90f;  // Góc quay lớn nhất (độ)
     public float shootSpeed = 5f; // Tốc độ bắn móc câu
     public float baseReturnSpeed = 7f; // Tốc độ quay về của móc câu (không có vàng)
+    public Animator playerAnim;
 
     private float currentAngle; // Góc hiện tại của móc câu
     private bool movingClockwise = true; // Hướng di chuyển
@@ -16,11 +17,13 @@ public class HookController : MonoBehaviour
     private bool isReturning = false; // Trạng thái quay về
     private Vector3 shootDirection; // Hướng bắn của móc câu
     private Vector3 initialPosition; // Vị trí ban đầu của móc câu
+    private int itemHookIndex;
 
-    private GameObject attachedGold = null; // Tham chiếu đến vàng được gắn (nếu có)
+    private GameObject attached = null; // Tham chiếu đến vàng được gắn (nếu có)
 
     void Start()
     {
+        itemHookIndex = 0;
         currentAngle = minAngle; // Đặt góc ban đầu
         initialPosition = transform.position; // Ghi nhận vị trí ban đầu
     }
@@ -97,13 +100,21 @@ public class HookController : MonoBehaviour
 
     private void ReturnToStart()
     {
+        if (itemHookIndex == 0)
+            playerAnim.SetBool("hookGold", true);
+        else if (itemHookIndex == 1)
+        {
+            Debug.Log("Hi");
+            playerAnim.SetBool("hookRock", true);
+        }
+
         float returnSpeed = baseReturnSpeed;
 
-        if (attachedGold != null)
+        if (attached != null)
         {
             // Lấy khối lượng của vàng để làm chậm tốc độ quay về
-            float goldWeight = attachedGold.GetComponent<GoldController>().GetGoldWeight();
-            returnSpeed /= goldWeight; // Vàng nặng làm chậm tốc độ quay về
+            float itemWeight = attached.GetComponent<GoldController>().GetGoldWeight();
+            returnSpeed /= itemWeight; // Vàng nặng làm chậm tốc độ quay về
         }
 
         transform.position = Vector3.MoveTowards(transform.position, initialPosition, returnSpeed * Time.deltaTime);
@@ -113,14 +124,22 @@ public class HookController : MonoBehaviour
             isReturning = false;
             isShooting = false;
 
-            if (attachedGold != null)
+            if (attached != null)
             {
                 // Thêm điểm từ vàng đã thu thập
-                int goldPoints = attachedGold.GetComponent<GoldController>().GetGoldValue();
+                int goldPoints = attached.GetComponent<GoldController>().GetGoldValue();
                 GameManager.Instance.AddScore(goldPoints); // Cộng điểm vào GameManager
 
-                Destroy(attachedGold); // Hủy vàng
-                attachedGold = null;
+                Destroy(attached); // Hủy vàng
+                if (itemHookIndex == 0)
+                    playerAnim.SetBool("hookGold", false);
+                else if (itemHookIndex == 1)
+                {
+                    playerAnim.SetBool("hookRock", false);
+                    playerAnim.SetBool("angry", true);
+                }
+
+                attached = null;
             }
         }
     }
@@ -131,9 +150,17 @@ public class HookController : MonoBehaviour
         {
             isReturning = true;
         }
-        else if (collision.CompareTag("gold") && attachedGold == null)
+        else if (collision.CompareTag("gold") && attached == null)
         {
-            attachedGold = collision.gameObject;
+            attached = collision.gameObject;
+            itemHookIndex = 0;
+            collision.GetComponent<GoldController>().AttachToHook(transform);
+            isReturning = true;
+        }
+        else if (collision.CompareTag("rock") && attached == null)
+        {
+            attached = collision.gameObject;
+            itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
