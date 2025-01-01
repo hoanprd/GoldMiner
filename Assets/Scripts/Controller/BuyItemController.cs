@@ -13,4 +13,24 @@ public class BuyItemController : MonoBehaviour
     {
         PlayerPrefs.SetInt("BuyBomb", 1);
     }
+
+    public void BuyPower()
+    {
+        PlayerPrefs.SetInt("BuyPower", 1);
+    }
+
+    public void BuyDiamondValue()
+    {
+        PlayerPrefs.SetInt("BuyDiamondValue", 1);
+    }
+
+    public void BuyLuckyUp()
+    {
+        PlayerPrefs.SetInt("BuyDiamondValue", 1);
+    }
+
+    public void BuyRockValue()
+    {
+        PlayerPrefs.SetInt("BuyDiamondValue", 1);
+    }
 }
