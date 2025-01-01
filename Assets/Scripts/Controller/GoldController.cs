@@ -18,7 +18,10 @@ public class GoldController : MonoBehaviour
     private Transform hook; // Tham chiếu đến móc câu
     private bool isAttached = false; // Trạng thái vàng đã dính vào móc câu
 
-    public int lightGoldValue = 10;  // Điểm cho vàng nhẹ
+    public int value;
+    public int weight;
+
+    /*public int lightGoldValue = 10;  // Điểm cho vàng nhẹ
     public int mediumGoldValue = 20; // Điểm cho vàng trung bình
     public int heavyGoldValue = 30;  // Điểm cho vàng nặng
     public int diamondValue = 40;
@@ -32,7 +35,7 @@ public class GoldController : MonoBehaviour
     public float heavyGoldWeight = 3f;  // Khối lượng của vàng nặng
     public float lightRockWeight = 1f;  // Khối lượng của vàng nhẹ
     public float mediumRockWeight = 2f; // Khối lượng của vàng trung bình
-    public float heavyRockWeight = 3f;  // Khối lượng của vàng nặng
+    public float heavyRockWeight = 3f;  // Khối lượng của vàng nặng*/
 
     private int goldValue; // Điểm của vàng hiện tại
     private float goldWeight; // Khối lượng của vàng
@@ -40,7 +43,10 @@ public class GoldController : MonoBehaviour
     void Start()
     {
         // Cập nhật giá trị điểm và khối lượng của vàng dựa trên loại vàng
-        switch (goldType)
+        goldValue = value;
+        goldWeight = weight;
+
+        /*switch (goldType)
         {
             case GoldType.GoldLight:
                 goldValue = lightGoldValue;
@@ -74,7 +80,7 @@ public class GoldController : MonoBehaviour
                 goldValue = heavyRockValue;
                 goldWeight = heavyRockWeight;
                 break;
-        }
+        }*/
     }
 
     void Update()

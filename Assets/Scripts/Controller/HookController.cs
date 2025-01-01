@@ -100,11 +100,10 @@ public class HookController : MonoBehaviour
 
     private void ReturnToStart()
     {
-        if (itemHookIndex == 0)
+        if (itemHookIndex == 0 || itemHookIndex == 1)
             playerAnim.SetBool("hookGold", true);
-        else if (itemHookIndex == 1)
+        else if (itemHookIndex == 2)
         {
-            Debug.Log("Hi");
             playerAnim.SetBool("hookRock", true);
         }
 
@@ -119,7 +118,7 @@ public class HookController : MonoBehaviour
                 returnSpeed /= itemWeight - GameManager.Instance.powerValue;
             }
             else
-                returnSpeed /= itemWeight - (itemWeight * GameManager.Instance.powerValue); // Vàng nặng làm chậm tốc độ quay về
+                returnSpeed /= itemWeight; // Vàng nặng làm chậm tốc độ quay về
         }
 
         transform.position = Vector3.MoveTowards(transform.position, initialPosition, returnSpeed * Time.deltaTime);
@@ -164,6 +163,15 @@ public class HookController : MonoBehaviour
         }
         else if (collision.CompareTag("rock") && attached == null)
         {
+            GameManager.Instance.itemHookingIndex = 2;
+            attached = collision.gameObject;
+            itemHookIndex = 2;
+            collision.GetComponent<GoldController>().AttachToHook(transform);
+            isReturning = true;
+        }
+        else if (collision.CompareTag("diamond") && attached == null)
+        {
+            GameManager.Instance.itemHookingIndex = 1;
             attached = collision.gameObject;
             itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);

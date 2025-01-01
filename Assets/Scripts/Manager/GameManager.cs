@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int clockSandTime, luckRate, diamondValue, rockValue;
+    public int itemHookingIndex;
     public float powerValue;
 
     private int score;
@@ -34,9 +35,22 @@ public class GameManager : MonoBehaviour
     {
         if (!IsGameOver) // Chỉ cộng điểm nếu chưa game over
         {
-            score += points;
+            if (itemHookingIndex == 2 && PlayerPrefs.GetInt("BuyRockValue") == 1)
+            {
+                //diamond x2
+                score += points * 2;
+            }
+            else if (itemHookingIndex == 1 && PlayerPrefs.GetInt("BuyDiamondValue") == 1)
+            {
+                //diamond x2
+                score += points * 2;
+            }
+            else
+            {
+                score += points;
+            }
             uiManager.UpdateScoreText(score); // Cập nhật UI sau khi cộng điểm
-            if (GetScore() >= lvManager.levelTarget[lvManager.levelIndex])
+            if (GetScore() >= lvManager.levelTarget[PlayerPrefs.GetInt("Level")])
             {
                 LevelPass(lvManager.levelIndex);
             }
@@ -59,7 +73,7 @@ public class GameManager : MonoBehaviour
 
     public void LevelPass(int levelIndex)
     {
-        PlayerPrefs.SetInt("Level", levelIndex + 1);
+        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
         SceneManager.LoadScene("ShopScene");
     }
 }

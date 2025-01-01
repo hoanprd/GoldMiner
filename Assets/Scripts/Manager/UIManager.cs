@@ -3,23 +3,28 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    LevelManager lvManager;
+
     public Text scoreText;  // Hiển thị điểm số
     public Text timeText;   // Hiển thị thời gian còn lại
     public Text levelText;
-    public GameManager gameManager; // Tham chiếu đến GameManager
+    public Text targetText;
 
     public float timeLimit;  // Thời gian tối đa (giây)
     private float remainingTime;   // Thời gian còn lại
 
     private void Start()
     {
+        lvManager = FindObjectOfType<LevelManager>();
+
         if (PlayerPrefs.GetInt("BuySandClock") == 1)
         {
             timeLimit += GameManager.Instance.clockSandTime;
         }
         remainingTime = timeLimit;  // Đặt thời gian ban đầu
         levelText.text = "Level " + (PlayerPrefs.GetInt("Level") + 1).ToString();
-        UpdateScoreText(gameManager.GetScore()); // Cập nhật điểm khi bắt đầu
+        targetText.text = "$" + lvManager.levelTarget[PlayerPrefs.GetInt("Level")];
+        UpdateScoreText(GameManager.Instance.GetScore()); // Cập nhật điểm khi bắt đầu
     }
 
     private void Update()
@@ -33,9 +38,9 @@ public class UIManager : MonoBehaviour
         else
         {
             // Khi hết thời gian, gọi GameOver trong GameManager
-            if (!gameManager.IsGameOver)
+            if (!GameManager.Instance.IsGameOver)
             {
-                gameManager.GameOver(); // Kết thúc trò chơi
+                GameManager.Instance.GameOver(); // Kết thúc trò chơi
             }
         }
     }

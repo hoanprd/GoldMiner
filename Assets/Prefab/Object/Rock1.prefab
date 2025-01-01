@@ -213,6 +213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldType: 5
+  value: 50
+  weight: 2
   lightGoldValue: 100
   mediumGoldValue: 300
   heavyGoldValue: 600

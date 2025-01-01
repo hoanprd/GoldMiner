@@ -31,6 +31,6 @@ public class BuyItemController : MonoBehaviour
 
     public void BuyRockValue()
     {
-        PlayerPrefs.SetInt("BuyDiamondValue", 1);
+        PlayerPrefs.SetInt("BuyRockValue", 1);
     }
 }
