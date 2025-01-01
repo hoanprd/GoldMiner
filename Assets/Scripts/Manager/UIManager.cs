@@ -8,11 +8,15 @@ public class UIManager : MonoBehaviour
     public Text levelText;
     public GameManager gameManager; // Tham chiếu đến GameManager
 
-    public float timeLimit = 60f;  // Thời gian tối đa (giây)
+    public float timeLimit;  // Thời gian tối đa (giây)
     private float remainingTime;   // Thời gian còn lại
 
     private void Start()
     {
+        if (PlayerPrefs.GetInt("BuySandClock") == 1)
+        {
+            timeLimit += GameManager.Instance.clockSandTime;
+        }
         remainingTime = timeLimit;  // Đặt thời gian ban đầu
         levelText.text = "Level " + (PlayerPrefs.GetInt("Level") + 1).ToString();
         UpdateScoreText(gameManager.GetScore()); // Cập nhật điểm khi bắt đầu

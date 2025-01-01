@@ -5,11 +5,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public int clockSandTime, powerValue, luckRate, diamondValue, rockValue;
+
     private int score;
     public bool IsGameOver { get; private set; } // Kiểm tra trạng thái game over
 
-    public UIManager uiManager; // Tham chiếu đến UIManager
-    public LevelManager lvManager;
+    UIManager uiManager; // Tham chiếu đến UIManager
+    LevelManager lvManager;
 
     private void Awake()
     {
@@ -22,6 +24,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // Nếu có một instance khác, hủy object này
         }
+
+        uiManager = FindObjectOfType<UIManager>();
+        lvManager = FindObjectOfType<LevelManager>();
     }
 
     public void AddScore(int points)
