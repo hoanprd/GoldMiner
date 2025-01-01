@@ -5,6 +5,7 @@ public class UIManager : MonoBehaviour
 {
     public Text scoreText;  // Hiển thị điểm số
     public Text timeText;   // Hiển thị thời gian còn lại
+    public Text levelText;
     public GameManager gameManager; // Tham chiếu đến GameManager
 
     public float timeLimit = 60f;  // Thời gian tối đa (giây)
@@ -13,6 +14,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         remainingTime = timeLimit;  // Đặt thời gian ban đầu
+        levelText.text = "Level " + (PlayerPrefs.GetInt("Level") + 1).ToString();
         UpdateScoreText(gameManager.GetScore()); // Cập nhật điểm khi bắt đầu
     }
 

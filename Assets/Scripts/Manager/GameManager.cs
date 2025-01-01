@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     public bool IsGameOver { get; private set; } // Kiểm tra trạng thái game over
 
     public UIManager uiManager; // Tham chiếu đến UIManager
+    public LevelManager lvManager;
 
     private void Awake()
     {
@@ -28,6 +30,10 @@ public class GameManager : MonoBehaviour
         {
             score += points;
             uiManager.UpdateScoreText(score); // Cập nhật UI sau khi cộng điểm
+            if (GetScore() >= lvManager.levelTarget[lvManager.levelIndex])
+            {
+                LevelPass(lvManager.levelIndex);
+            }
         }
     }
 
@@ -43,5 +49,11 @@ public class GameManager : MonoBehaviour
 
         // Thực hiện các hành động khác khi game over, ví dụ: chuyển đến màn hình game over
         // UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverScene");
+    }
+
+    public void LevelPass(int levelIndex)
+    {
+        PlayerPrefs.SetInt("Level", levelIndex + 1);
+        SceneManager.LoadScene("ShopScene");
     }
 }
