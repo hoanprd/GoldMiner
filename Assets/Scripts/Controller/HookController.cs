@@ -101,6 +101,8 @@ public class HookController : MonoBehaviour
 
             // Hủy vật thể bị kéo
             Destroy(currentObject.gameObject);
+            playerAnim.SetBool("hookGold", false);
+            playerAnim.SetBool("hookRock", false);
 
             // Reset trạng thái móc câu
             ResetHook();
