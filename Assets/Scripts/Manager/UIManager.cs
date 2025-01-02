@@ -9,11 +9,11 @@ public class UIManager : MonoBehaviour
     public Text timeText;   // Hiển thị thời gian còn lại
     public Text levelText;
     public Text targetText;
-    public GameObject bombUI;
+    public GameObject bombUI, skipButton;
     public Text bombAmongText;
 
     //fix singeton kh khởi tạo UI
-    public static bool updateScore;
+    public static bool updateScore, levelTargetDone;
     public static int scoreValue;
 
     public float timeLimit;  // Thời gian tối đa (giây)
@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     {
         lvManager = FindObjectOfType<LevelManager>();
         updateScore = false;
+        levelTargetDone = false;
 
         if (PlayerPrefs.GetInt("BuySandClock") == 1)
         {
@@ -57,13 +58,22 @@ public class UIManager : MonoBehaviour
                 updateScore = false;
                 UpdateScoreText(scoreValue);
             }
+
+            if (levelTargetDone)
+            {
+                skipButton.SetActive(true);
+            }
         }
         else
         {
             // Khi hết thời gian, gọi GameOver trong GameManager
-            if (!GameManager.Instance.IsGameOver)
+            if (!GameManager.Instance.IsGameOver && !levelTargetDone)
             {
                 GameManager.Instance.GameOver(); // Kết thúc trò chơi
+            }
+            else
+            {
+                GameManager.Instance.LevelPass();
             }
         }
     }
@@ -81,5 +91,10 @@ public class UIManager : MonoBehaviour
         {
             scoreText.text = "$ " + newScore.ToString();
         }
+    }
+
+    public void SkipLevel()
+    {
+        GameManager.Instance.LevelPass();
     }
 }

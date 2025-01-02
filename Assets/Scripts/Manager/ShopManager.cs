@@ -18,8 +18,8 @@ public class ShopManager : MonoBehaviour
         int[] uniqueNumbers = new int[3]; // Mảng chứa 3 số ngẫu nhiên
         int count = 0;
 
-        levelText.text = PlayerPrefs.GetInt("Level").ToString();
-        scoreText.text = GameManager.Instance.GetScore().ToString();
+        levelText.text = "Level: " + PlayerPrefs.GetInt("Level").ToString();
+        scoreText.text = "$" + GameManager.Instance.GetScore().ToString();
 
         while (count < 3)
         {
@@ -51,8 +51,8 @@ public class ShopManager : MonoBehaviour
         if (buyItemFromShop)
         {
             buyItemFromShop = false;
-            levelText.text = PlayerPrefs.GetInt("Level").ToString();
-            scoreText.text = GameManager.Instance.GetScore().ToString();
+            levelText.text = "Level: " + PlayerPrefs.GetInt("Level").ToString();
+            scoreText.text = "$" + GameManager.Instance.GetScore().ToString();
             annouText.GetComponent<Text>().text = "Buy success!";
             annouText.SetActive(true);
             StartCoroutine(delayOffAnnou());
