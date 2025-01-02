@@ -52,6 +52,11 @@ public class GoldController : MonoBehaviour
         // Cập nhật giá trị điểm và khối lượng của vàng dựa trên loại vàng
         if (randomPack)
         {
+            if (PlayerPrefs.GetInt("BuyLuckyUpValue") == 1)
+            {
+                minRange += 200;
+                maxRange += 100;
+            }
             goldValue = Random.Range(minRange, maxRange);
         }
         else
