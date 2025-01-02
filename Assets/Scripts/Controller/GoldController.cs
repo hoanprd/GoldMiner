@@ -21,6 +21,8 @@ public class GoldController : MonoBehaviour
     public int value;
     public int weight;
 
+    private MonoBehaviour movementScript; // Script di chuyển qua lại (ví dụ ObjectMover)
+
     /*public int lightGoldValue = 10;  // Điểm cho vàng nhẹ
     public int mediumGoldValue = 20; // Điểm cho vàng trung bình
     public int heavyGoldValue = 30;  // Điểm cho vàng nặng
@@ -42,6 +44,9 @@ public class GoldController : MonoBehaviour
 
     void Start()
     {
+        // Tìm script di chuyển qua lại trên object
+        movementScript = GetComponent<ObjectMovementController>(); // Đổi thành script bạn đang sử dụng
+
         // Cập nhật giá trị điểm và khối lượng của vàng dựa trên loại vàng
         goldValue = value;
         goldWeight = weight;
@@ -96,6 +101,24 @@ public class GoldController : MonoBehaviour
     {
         hook = hookTransform; // Gán móc câu hiện tại
         isAttached = true;    // Đánh dấu vàng đã được gắn
+
+        // Dừng di chuyển qua lại
+        if (movementScript != null)
+        {
+            movementScript.enabled = false;
+        }
+    }
+
+    public void DetachFromHook()
+    {
+        isAttached = false;   // Đánh dấu trạng thái không còn gắn
+        hook = null;          // Hủy tham chiếu đến hook
+
+        // Kích hoạt lại di chuyển qua lại
+        if (movementScript != null)
+        {
+            movementScript.enabled = true;
+        }
     }
 
     public int GetGoldValue()

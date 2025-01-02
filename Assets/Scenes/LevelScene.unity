@@ -170,6 +170,8 @@ MonoBehaviour:
   timeText: {fileID: 1253942262}
   levelText: {fileID: 947084337}
   targetText: {fileID: 154248945}
+  bombUI: {fileID: 1546477665}
+  bombAmongText: {fileID: 818915031}
   timeLimit: 90
 --- !u!1 &149103777
 GameObject:
@@ -370,6 +372,7 @@ MonoBehaviour:
   maxAngle: 60
   shootSpeed: 5
   baseReturnSpeed: 7
+  explosionEffectPrefab: {fileID: 2851122563925839669, guid: daeff22a70b374b409fa303998538595, type: 3}
   playerAnim: {fileID: 321118338}
 --- !u!212 &223681276
 SpriteRenderer:
@@ -1695,13 +1698,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7895374}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 223681275}
+        m_TargetAssemblyTypeName: HookController, Assembly-CSharp
+        m_MethodName: UseBoosterBomb
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
