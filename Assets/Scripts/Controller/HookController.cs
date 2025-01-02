@@ -9,7 +9,9 @@ public class HookController : MonoBehaviour
     public float maxAngle = 90f;  // Góc quay lớn nhất (độ)
     public float shootSpeed = 5f; // Tốc độ bắn móc câu
     public float baseReturnSpeed = 7f; // Tốc độ quay về của móc câu (không có vàng)
-    public GameObject explosionEffectPrefab;
+    public float explosionRadius = 5f; // Bán kính nổ
+    public float explosionForce = 10f; // Lực nổ (cho các đối tượng bị nổ bay ra)
+    public GameObject bombExplosionFXPrefab, tntExplosionFXPrefab;
     public Animator playerAnim;
 
     private float currentAngle; // Góc hiện tại của móc câu
@@ -95,7 +97,7 @@ public class HookController : MonoBehaviour
             PlayerPrefs.SetInt("BuyBomb", PlayerPrefs.GetInt("BuyBomb") - 1);
 
             // Sinh hiệu ứng nổ tại vị trí vật thể
-            Instantiate(explosionEffectPrefab, currentObject.position, Quaternion.identity);
+            Instantiate(bombExplosionFXPrefab, currentObject.position, Quaternion.identity);
 
             // Hủy vật thể bị kéo
             Destroy(currentObject.gameObject);
@@ -174,6 +176,25 @@ public class HookController : MonoBehaviour
         }
     }
 
+    private void ExplodeTNT(Vector3 explosionPosition)
+    {
+        // Sinh hiệu ứng nổ tại vị trí TNT
+        Instantiate(tntExplosionFXPrefab, explosionPosition, Quaternion.identity);
+
+        // Tạo vùng nổ
+        Collider2D[] affectedObjects = Physics2D.OverlapCircleAll(explosionPosition, explosionRadius);
+
+        foreach (var obj in affectedObjects)
+        {
+            // Kiểm tra xem đối tượng có thuộc các tag cần hủy không
+            if (obj.CompareTag("gold") || obj.CompareTag("rock") || obj.CompareTag("diamond") || obj.CompareTag("ratGold"))
+            {
+                // Hủy đối tượng
+                Destroy(obj.gameObject);
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("hookRange"))
@@ -205,6 +226,27 @@ public class HookController : MonoBehaviour
             itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
+        }
+        else if (collision.CompareTag("ratGold") && attached == null)
+        {
+            //GameManager.Instance.itemHookingIndex = 1;
+            currentObject = collision.transform;
+            attached = collision.gameObject;
+            itemHookIndex = 1;
+            collision.GetComponent<GoldController>().AttachToHook(transform);
+            isReturning = true;
+        }
+        else if (collision.CompareTag("tnt") && attached == null)
+        {
+            //GameManager.Instance.itemHookingIndex = 1;
+            //currentObject = collision.transform;
+            attached = collision.gameObject;
+            //itemHookIndex = 1;
+            //collision.GetComponent<GoldController>().AttachToHook(transform);
+            //isReturning = true;
+            ExplodeTNT(collision.transform.position);
+            ResetHook();
+            Destroy(attached);
         }
     }
 }

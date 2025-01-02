@@ -20,8 +20,6 @@ public class LineDrawer : MonoBehaviour
         lineRenderer.startWidth = 0.05f; // Độ dày dây (đầu)
         lineRenderer.endWidth = 0.05f;   // Độ dày dây (cuối)
         lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Shader cho 2D
-        lineRenderer.startColor = Color.white; // Màu dây (đầu)
-        lineRenderer.endColor = Color.white;   // Màu dây (cuối)
     }
 
     void Update()
