@@ -18,6 +18,8 @@ public class GoldController : MonoBehaviour
     private Transform hook; // Tham chiếu đến móc câu
     private bool isAttached = false; // Trạng thái vàng đã dính vào móc câu
 
+    public bool randomPack;
+    public int minRange, maxRange;
     public int value;
     public int weight;
 
@@ -48,7 +50,14 @@ public class GoldController : MonoBehaviour
         movementScript = GetComponent<ObjectMovementController>(); // Đổi thành script bạn đang sử dụng
 
         // Cập nhật giá trị điểm và khối lượng của vàng dựa trên loại vàng
-        goldValue = value;
+        if (randomPack)
+        {
+            goldValue = Random.Range(minRange, maxRange);
+        }
+        else
+        {
+            goldValue = value;
+        }
         goldWeight = weight;
 
         /*switch (goldType)

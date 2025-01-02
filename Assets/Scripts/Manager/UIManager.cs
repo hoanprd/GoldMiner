@@ -67,6 +67,7 @@ public class UIManager : MonoBehaviour
     {
         if (scoreText != null)
         {
+            Debug.Log("Check");
             scoreText.text = "$ " + newScore.ToString();
         }
         else

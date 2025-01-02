@@ -236,6 +236,15 @@ public class HookController : MonoBehaviour
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
+        else if (collision.CompareTag("luckyPack") && attached == null)
+        {
+            //GameManager.Instance.itemHookingIndex = 1;
+            currentObject = collision.transform;
+            attached = collision.gameObject;
+            itemHookIndex = 1;
+            collision.GetComponent<GoldController>().AttachToHook(transform);
+            isReturning = true;
+        }
         else if (collision.CompareTag("tnt") && attached == null)
         {
             //GameManager.Instance.itemHookingIndex = 1;
