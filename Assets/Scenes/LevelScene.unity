@@ -368,11 +368,14 @@ MonoBehaviour:
   pivot: {fileID: 213698557}
   radius: 0.75
   rotationSpeed: 40
-  minAngle: -60
-  maxAngle: 60
+  minAngle: -65
+  maxAngle: 65
   shootSpeed: 5
   baseReturnSpeed: 7
-  explosionEffectPrefab: {fileID: 2851122563925839669, guid: daeff22a70b374b409fa303998538595, type: 3}
+  explosionRadius: 3
+  explosionForce: 10
+  bombExplosionFXPrefab: {fileID: 2851122563925839669, guid: daeff22a70b374b409fa303998538595, type: 3}
+  tntExplosionFXPrefab: {fileID: 2851122563925839669, guid: 341151254fdedc64ab2dfae32fca19d7, type: 3}
   playerAnim: {fileID: 321118338}
 --- !u!212 &223681276
 SpriteRenderer:
@@ -1299,9 +1302,9 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 0.34393606, b: 0, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.6698113, g: 0.40289038, b: 0.26223743, a: 1}
+      key1: {r: 0.674667, g: 0.4020234, b: 0.258381, a: 1}
+      key2: {r: 1, g: 0.34393606, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -1309,7 +1312,7 @@ LineRenderer:
       key7: {r: 0, g: 0, b: 0, a: 0}
       ctime0: 0
       ctime1: 65535
-      ctime2: 0
+      ctime2: 65535
       ctime3: 0
       ctime4: 0
       ctime5: 0
