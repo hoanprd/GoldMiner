@@ -41,13 +41,11 @@ public class ObjectMovementController : MonoBehaviour
         // Kiểm tra nếu đạt giới hạn bên phải
         if (movingRight && transform.position.x >= rightLimit.x)
         {
-            Debug.Log("Hi1");
             TurnAround(false); // Quay đầu sang trái
         }
         // Kiểm tra nếu đạt giới hạn bên trái
         else if (!movingRight && transform.position.x <= leftLimit.x)
         {
-            Debug.Log("Hi2");
             TurnAround(true); // Quay đầu sang phải
         }
     }

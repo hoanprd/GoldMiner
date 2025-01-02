@@ -12,6 +12,7 @@ TagManager:
   - ratDiamond
   - hookRange
   - tnt
+  - luckyPack
   layers:
   - Default
   - TransparentFX
