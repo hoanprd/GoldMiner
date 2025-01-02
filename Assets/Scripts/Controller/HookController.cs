@@ -9,6 +9,7 @@ public class HookController : MonoBehaviour
     public float maxAngle = 90f;  // Góc quay lớn nhất (độ)
     public float shootSpeed = 5f; // Tốc độ bắn móc câu
     public float baseReturnSpeed = 7f; // Tốc độ quay về của móc câu (không có vàng)
+    public GameObject explosionEffectPrefab;
     public Animator playerAnim;
 
     private float currentAngle; // Góc hiện tại của móc câu
@@ -18,6 +19,7 @@ public class HookController : MonoBehaviour
     private Vector3 shootDirection; // Hướng bắn của móc câu
     private Vector3 initialPosition; // Vị trí ban đầu của móc câu
     private int itemHookIndex;
+    private Transform currentObject; // Vật thể đang bị kéo
 
     private GameObject attached = null; // Tham chiếu đến vàng được gắn (nếu có)
 
@@ -83,6 +85,30 @@ public class HookController : MonoBehaviour
         transform.position = pivot.position + offset;
 
         transform.rotation = Quaternion.Euler(0, 0, currentAngle);
+    }
+
+    public void UseBoosterBomb()
+    {
+        // Kiểm tra nếu có vật thể đang bị kéo
+        if (currentObject != null && PlayerPrefs.GetInt("BuyBomb") > 0)
+        {
+            PlayerPrefs.SetInt("BuyBomb", PlayerPrefs.GetInt("BuyBomb") - 1);
+
+            // Sinh hiệu ứng nổ tại vị trí vật thể
+            Instantiate(explosionEffectPrefab, currentObject.position, Quaternion.identity);
+
+            // Hủy vật thể bị kéo
+            Destroy(currentObject.gameObject);
+
+            // Reset trạng thái móc câu
+            ResetHook();
+        }
+    }
+
+    private void ResetHook()
+    {
+        // Đưa móc câu quay về vị trí ban đầu
+        isReturning = true;
     }
 
     private void StartShooting()
@@ -157,6 +183,7 @@ public class HookController : MonoBehaviour
         else if (collision.CompareTag("gold") && attached == null)
         {
             attached = collision.gameObject;
+            currentObject = collision.transform;
             itemHookIndex = 0;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
@@ -164,6 +191,7 @@ public class HookController : MonoBehaviour
         else if (collision.CompareTag("rock") && attached == null)
         {
             GameManager.Instance.itemHookingIndex = 2;
+            currentObject = collision.transform;
             attached = collision.gameObject;
             itemHookIndex = 2;
             collision.GetComponent<GoldController>().AttachToHook(transform);
@@ -172,6 +200,7 @@ public class HookController : MonoBehaviour
         else if (collision.CompareTag("diamond") && attached == null)
         {
             GameManager.Instance.itemHookingIndex = 1;
+            currentObject = collision.transform;
             attached = collision.gameObject;
             itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);

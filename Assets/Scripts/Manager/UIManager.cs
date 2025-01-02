@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
     public Text timeText;   // Hiển thị thời gian còn lại
     public Text levelText;
     public Text targetText;
+    public GameObject bombUI;
+    public Text bombAmongText;
 
     public float timeLimit;  // Thời gian tối đa (giây)
     private float remainingTime;   // Thời gian còn lại
@@ -34,6 +36,15 @@ public class UIManager : MonoBehaviour
         {
             remainingTime -= Time.deltaTime; // Giảm thời gian còn lại mỗi frame
             UpdateTimeText(); // Cập nhật hiển thị thời gian
+            if (PlayerPrefs.GetInt("BuyBomb") > 0)
+            {
+                bombUI.SetActive(true);
+                bombAmongText.text = PlayerPrefs.GetInt("BuyBomb").ToString();
+            }
+            else
+            {
+                bombUI.SetActive(false);
+            }
         }
         else
         {
