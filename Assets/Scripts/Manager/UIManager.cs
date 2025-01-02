@@ -12,12 +12,17 @@ public class UIManager : MonoBehaviour
     public GameObject bombUI;
     public Text bombAmongText;
 
+    //fix singeton kh khởi tạo UI
+    public static bool updateScore;
+    public static int scoreValue;
+
     public float timeLimit;  // Thời gian tối đa (giây)
     private float remainingTime;   // Thời gian còn lại
 
     private void Start()
     {
         lvManager = FindObjectOfType<LevelManager>();
+        updateScore = false;
 
         if (PlayerPrefs.GetInt("BuySandClock") == 1)
         {
@@ -25,7 +30,7 @@ public class UIManager : MonoBehaviour
         }
         remainingTime = timeLimit;  // Đặt thời gian ban đầu
         levelText.text = "Level " + (PlayerPrefs.GetInt("Level") + 1).ToString();
-        targetText.text = "$" + lvManager.levelTarget[PlayerPrefs.GetInt("Level")];
+        targetText.text = "$" + lvManager.levelTarget[PlayerPrefs.GetInt("Level")] + "/";
         UpdateScoreText(GameManager.Instance.GetScore()); // Cập nhật điểm khi bắt đầu
     }
 
@@ -44,6 +49,13 @@ public class UIManager : MonoBehaviour
             else
             {
                 bombUI.SetActive(false);
+            }
+
+            // Nhận điểm từ GameManager sẽ update score
+            if (updateScore)
+            {
+                updateScore = false;
+                UpdateScoreText(scoreValue);
             }
         }
         else
@@ -67,12 +79,7 @@ public class UIManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            Debug.Log("Check");
             scoreText.text = "$ " + newScore.ToString();
-        }
-        else
-        {
-            Debug.LogWarning("ScoreText chưa được gán trong UIManager.");
         }
     }
 }

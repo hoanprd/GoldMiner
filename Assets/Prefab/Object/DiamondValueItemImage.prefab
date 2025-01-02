@@ -202,7 +202,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6858090716799610767}
         m_TargetAssemblyTypeName: BuyItemController, Assembly-CSharp
-        m_MethodName: BuyBomb
+        m_MethodName: BuyDiamondValue
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -365,7 +365,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Diamond up
+  m_Text: 'Diamond up $500
 
     Increase diamond value in next level'
 --- !u!1 &6810204273881336081
@@ -459,3 +459,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8b98238c07773146a6f883777e42f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costValue: 500
+  buyButton: {fileID: 3804570346108290268}

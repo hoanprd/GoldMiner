@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class ShopManager : MonoBehaviour
 {
     public GameObject[] prefabToSpawn;  // Tham chiếu đến prefab cần sinh ra
     public Transform parentObject;    // Tham chiếu đến đối tượng cha
+    public Text levelText, scoreText;
+    public GameObject annouText;
+    public static bool buyItemFromShop, buyFail;
 
     // Start is called before the first frame update
     void Start()
     {
         int[] uniqueNumbers = new int[3]; // Mảng chứa 3 số ngẫu nhiên
         int count = 0;
+
+        levelText.text = PlayerPrefs.GetInt("Level").ToString();
+        scoreText.text = GameManager.Instance.GetScore().ToString();
 
         while (count < 3)
         {
@@ -39,8 +46,34 @@ public class ShopManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (buyItemFromShop)
+        {
+            buyItemFromShop = false;
+            levelText.text = PlayerPrefs.GetInt("Level").ToString();
+            scoreText.text = GameManager.Instance.GetScore().ToString();
+            annouText.GetComponent<Text>().text = "Buy success!";
+            annouText.SetActive(true);
+            StartCoroutine(delayOffAnnou());
+        }
+        else if (buyFail)
+        {
+            buyFail = false;
+            annouText.GetComponent<Text>().text = "Not enough!";
+            annouText.SetActive(true);
+            StartCoroutine(delayOffAnnou());
+        }
+    }
+
     public void NextLevel()
     {
         SceneManager.LoadScene("LevelScene");
+    }
+
+    IEnumerator delayOffAnnou()
+    {
+        yield return new WaitForSeconds(1f);
+        annouText.SetActive(false);
     }
 }

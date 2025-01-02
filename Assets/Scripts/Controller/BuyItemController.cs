@@ -1,36 +1,100 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuyItemController : MonoBehaviour
 {
+    public int costValue;
+    public Button buyButton;
+
     public void BuySandClock()
     {
-        PlayerPrefs.SetInt("BuySandClock", 1);
+        if (GameManager.Instance.GetScore() >= costValue)
+        {
+            ShopManager.buyItemFromShop = true;
+            PlayerPrefs.SetInt("BuySandClock", 1);
+            BuyInteract();
+        }
+        else
+        {
+            ShopManager.buyFail = true;
+        }
     }
 
     public void BuyBomb()
     {
-        PlayerPrefs.SetInt("BuyBomb", 1);
+        if (GameManager.Instance.GetScore() >= costValue)
+        {
+            ShopManager.buyItemFromShop = true;
+            PlayerPrefs.SetInt("BuyBomb", PlayerPrefs.GetInt("BuyBomb") + 1);
+            BuyInteract();
+        }
+        else
+        {
+            ShopManager.buyFail = true;
+        }
     }
 
     public void BuyPower()
     {
-        PlayerPrefs.SetInt("BuyPower", 1);
+        if (GameManager.Instance.GetScore() >= costValue)
+        {
+            ShopManager.buyItemFromShop = true;
+            PlayerPrefs.SetInt("BuyPower", 1);
+            BuyInteract();
+        }
+        else
+        {
+            ShopManager.buyFail = true;
+        }
     }
 
     public void BuyDiamondValue()
     {
-        PlayerPrefs.SetInt("BuyDiamondValue", 1);
+        if (GameManager.Instance.GetScore() >= costValue)
+        {
+            ShopManager.buyItemFromShop = true;
+            PlayerPrefs.SetInt("BuyDiamondValue", 1);
+            BuyInteract();
+        }
+        else
+        {
+            ShopManager.buyFail = true;
+        }
     }
 
     public void BuyLuckyUp()
     {
-        PlayerPrefs.SetInt("BuyDiamondValue", 1);
+        if (GameManager.Instance.GetScore() >= costValue)
+        {
+            ShopManager.buyItemFromShop = true;
+            PlayerPrefs.SetInt("BuyLuckyUpValue", 1);
+            BuyInteract();
+        }
+        else
+        {
+            ShopManager.buyFail = true;
+        }
     }
 
     public void BuyRockValue()
     {
-        PlayerPrefs.SetInt("BuyRockValue", 1);
+        if (GameManager.Instance.GetScore() >= costValue)
+        {
+            ShopManager.buyItemFromShop = true;
+            PlayerPrefs.SetInt("BuyRockValue", 1);
+            BuyInteract();
+        }
+        else
+        {
+            ShopManager.buyFail = true;
+        }
+    }
+
+    public void BuyInteract()
+    {
+        GameManager.Instance.AddScore(-costValue);
+        buyButton.enabled = false;
     }
 }
