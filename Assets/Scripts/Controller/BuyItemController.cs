@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BuyItemController : MonoBehaviour
 {
     public int costValue;
-    public Button buyButton;
+    public GameObject buyButton;
 
     public void BuySandClock()
     {
@@ -95,6 +95,6 @@ public class BuyItemController : MonoBehaviour
     public void BuyInteract()
     {
         GameManager.Instance.AddScore(-costValue);
-        buyButton.enabled = false;
+        buyButton.SetActive(false);
     }
 }

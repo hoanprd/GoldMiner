@@ -6,9 +6,11 @@ public class LevelManager : MonoBehaviour
     public Transform parentObject;    // Tham chiếu đến đối tượng cha
     public int[] levelTarget;
     public int levelIndex;
+    public static int levelEndGame;
 
     void Start()
     {
+        levelEndGame = 2;
         levelIndex = PlayerPrefs.GetInt("Level");
         
         

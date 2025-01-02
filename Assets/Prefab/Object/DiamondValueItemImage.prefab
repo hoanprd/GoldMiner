@@ -460,4 +460,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   costValue: 500
-  buyButton: {fileID: 3804570346108290268}
+  buyButton: {fileID: 1648682470004194599}

@@ -55,10 +55,7 @@ public class GameManager : MonoBehaviour
             //uiManager.UpdateScoreText(score); // Cập nhật UI sau khi cộng điểm
             UIManager.updateScore = true;
             UIManager.scoreValue = score;
-            if (GetScore() >= lvManager.levelTarget[PlayerPrefs.GetInt("Level")])
-            {
-                LevelPass(lvManager.levelIndex);
-            }
+            CheckLevelTargetPass();
         }
     }
 
@@ -71,14 +68,26 @@ public class GameManager : MonoBehaviour
     {
         IsGameOver = true; // Đánh dấu trò chơi kết thúc
         Debug.Log("Game Over!");
-
-        // Thực hiện các hành động khác khi game over, ví dụ: chuyển đến màn hình game over
-        // UnityEngine.SceneManagement.SceneManager.LoadScene("GameOverScene");
     }
 
-    public void LevelPass(int levelIndex)
+    public void CheckLevelTargetPass()
+    {
+        if (GetScore() >= lvManager.levelTarget[PlayerPrefs.GetInt("Level")])
+        {
+            UIManager.levelTargetDone = true;
+        }
+    }
+
+    public void LevelPass()
     {
         PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
-        SceneManager.LoadScene("ShopScene");
+        if (PlayerPrefs.GetInt("Level") < LevelManager.levelEndGame)
+        {
+            SceneManager.LoadScene("ShopScene");
+        }
+        else
+        {
+            //Game end;
+        }
     }
 }
