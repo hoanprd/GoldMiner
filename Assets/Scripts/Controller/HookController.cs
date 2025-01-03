@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class HookController : MonoBehaviour
 {
@@ -18,9 +19,9 @@ public class HookController : MonoBehaviour
     private bool movingClockwise = true; // Hướng di chuyển
     private bool isShooting = false; // Trạng thái bắn móc câu
     private bool isReturning = false; // Trạng thái quay về
+    private bool isHookTNT = false;
     private Vector3 shootDirection; // Hướng bắn của móc câu
     private Vector3 initialPosition; // Vị trí ban đầu của móc câu
-    private int itemHookIndex;
     private Transform currentObject; // Vật thể đang bị kéo
 
     private GameObject attached = null; // Tham chiếu đến vàng được gắn (nếu có)
@@ -28,7 +29,6 @@ public class HookController : MonoBehaviour
 
     void Start()
     {
-        itemHookIndex = 0;
         currentAngle = minAngle; // Đặt góc ban đầu
         initialPosition = transform.position; // Ghi nhận vị trí ban đầu
     }
@@ -58,8 +58,18 @@ public class HookController : MonoBehaviour
         // Kiểm tra sự kiện bắn móc câu (khi game chưa kết thúc)
         if (Input.GetMouseButtonDown(0) && !isShooting && !isReturning)
         {
+            if (IsPointerOverUI())
+            {
+                return;
+            }
+
             StartShooting();
         }
+    }
+
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private void UpdateRotation()
@@ -96,19 +106,23 @@ public class HookController : MonoBehaviour
         if (currentObject != null && PlayerPrefs.GetInt("BuyBomb") > 0)
         {
             MenuManager.Instance.PlaySound(MenuManager.Instance.bombFX, MenuManager.Instance.canPlayFX);
-            PlayerPrefs.SetInt("BuyBomb", PlayerPrefs.GetInt("BuyBomb") - 1);
+            if (PlayerPrefs.GetInt("BuyBomb") > 0)
+            {
+                PlayerPrefs.SetInt("BuyBomb", PlayerPrefs.GetInt("BuyBomb") - 1);
+            }
+
+            isHookTNT = true;
 
             // Sinh hiệu ứng nổ tại vị trí vật thể
             Instantiate(bombExplosionFXPrefab, currentObject.position, Quaternion.identity);
 
             // Hủy vật thể bị kéo
             Destroy(currentObject.gameObject);
+            MenuManager.Instance.PlaySound(MenuManager.Instance.pullFX, false);
             playerAnim.SetBool("hookGold", false);
-            playerAnim.SetBool("hookRock", false);
 
             // Reset trạng thái móc câu
             ResetHook();
-            MenuManager.Instance.PlaySound(MenuManager.Instance.bombFX, false);
         }
     }
 
@@ -133,13 +147,6 @@ public class HookController : MonoBehaviour
 
     private void ReturnToStart()
     {
-        if (itemHookIndex == 0 || itemHookIndex == 1)
-            playerAnim.SetBool("hookGold", true);
-        else if (itemHookIndex == 2)
-        {
-            playerAnim.SetBool("hookRock", true);
-        }
-
         float returnSpeed = baseReturnSpeed;
 
         if (attached != null)
@@ -147,6 +154,7 @@ public class HookController : MonoBehaviour
             if (!playPullFX)
             {
                 playPullFX = true;
+                playerAnim.SetBool("hookGold", true);
                 MenuManager.Instance.PlaySound(MenuManager.Instance.pullFX, MenuManager.Instance.canPlayFX);
             }
 
@@ -174,12 +182,11 @@ public class HookController : MonoBehaviour
                 GameManager.Instance.AddScore(goldPoints); // Cộng điểm vào GameManager
 
                 Destroy(attached); // Hủy vàng
-                if (itemHookIndex == 0)
-                    playerAnim.SetBool("hookGold", false);
-                else if (itemHookIndex == 1)
+                playerAnim.SetBool("hookGold", false);
+
+                if (isHookTNT)
                 {
-                    playerAnim.SetBool("hookRock", false);
-                    playerAnim.SetBool("angry", true);
+                    isHookTNT = false;
                 }
 
                 attached = null;
@@ -191,6 +198,8 @@ public class HookController : MonoBehaviour
 
     private void ExplodeTNT(Vector3 explosionPosition)
     {
+        MenuManager.Instance.PlaySound(MenuManager.Instance.bombFX, MenuManager.Instance.canPlayFX);
+
         // Sinh hiệu ứng nổ tại vị trí TNT
         Instantiate(tntExplosionFXPrefab, explosionPosition, Quaternion.identity);
 
@@ -218,7 +227,6 @@ public class HookController : MonoBehaviour
         {
             attached = collision.gameObject;
             currentObject = collision.transform;
-            itemHookIndex = 0;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
@@ -227,7 +235,6 @@ public class HookController : MonoBehaviour
             GameManager.Instance.itemHookingIndex = 2;
             currentObject = collision.transform;
             attached = collision.gameObject;
-            itemHookIndex = 2;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
@@ -236,7 +243,6 @@ public class HookController : MonoBehaviour
             GameManager.Instance.itemHookingIndex = 1;
             currentObject = collision.transform;
             attached = collision.gameObject;
-            itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
@@ -245,7 +251,6 @@ public class HookController : MonoBehaviour
             //GameManager.Instance.itemHookingIndex = 1;
             currentObject = collision.transform;
             attached = collision.gameObject;
-            itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
@@ -254,7 +259,6 @@ public class HookController : MonoBehaviour
             //GameManager.Instance.itemHookingIndex = 1;
             currentObject = collision.transform;
             attached = collision.gameObject;
-            itemHookIndex = 1;
             collision.GetComponent<GoldController>().AttachToHook(transform);
             isReturning = true;
         }
@@ -263,9 +267,7 @@ public class HookController : MonoBehaviour
             //GameManager.Instance.itemHookingIndex = 1;
             //currentObject = collision.transform;
             attached = collision.gameObject;
-            //itemHookIndex = 1;
-            //collision.GetComponent<GoldController>().AttachToHook(transform);
-            //isReturning = true;
+            isHookTNT = true;
             ExplodeTNT(collision.transform.position);
             ResetHook();
             Destroy(attached);

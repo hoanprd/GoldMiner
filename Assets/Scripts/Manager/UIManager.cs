@@ -67,13 +67,14 @@ public class UIManager : MonoBehaviour
                 skipButton.SetActive(true);
             }
         }
-        else
+        else if (remainingTime <= 0 && !GameManager.Instance.IsGameOver)
         {
             // Khi hết thời gian, gọi GameOver trong GameManager
             if (!GameManager.Instance.IsGameOver && !levelTargetDone)
             {
                 GameManager.Instance.GameOver(); // Kết thúc trò chơi
                 loseGamePanel.SetActive(true);
+                StartCoroutine(delayGoToMenu());
             }
             else
             {
@@ -83,9 +84,9 @@ public class UIManager : MonoBehaviour
                 }
                 else
                 {
-                    endGamePanel.SetActive(true);
                     GameManager.Instance.GameOver();
-                    delayGoToMenu();
+                    endGamePanel.SetActive(true);
+                    StartCoroutine(delayGoToMenu());
                 }
             }
         }
