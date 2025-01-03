@@ -8,9 +8,8 @@ public class MenuManager : MonoBehaviour
     public static MenuManager Instance;
 
     public GameObject continueButton, settingPanel, onBGMButton, offBGMButton, onFXButton, offFXButton;
-    public AudioSource menuBGM, levelBGM, clickFX;
-
-    private bool canPlayBGM, canPlayFX;
+    public AudioSource menuBGM, levelBGM, clickFX, pullFX, bombFX;
+    public bool canPlayBGM, canPlayFX;
 
     // Start is called before the first frame update
     void Start()
@@ -75,6 +74,7 @@ public class MenuManager : MonoBehaviour
         PlaySound(clickFX, canPlayFX);
         PlaySound(levelBGM, canPlayBGM);
         PlayerPrefs.SetInt("Level", 0);
+        PlayerPrefs.SetInt("Score", 0);
         PlayerPrefs.SetInt("BuySandClock", 0);
         PlayerPrefs.SetInt("BuyPower", 0);
         PlayerPrefs.SetInt("BuyBomb", 0);

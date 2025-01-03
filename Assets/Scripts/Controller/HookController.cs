@@ -24,6 +24,7 @@ public class HookController : MonoBehaviour
     private Transform currentObject; // Vật thể đang bị kéo
 
     private GameObject attached = null; // Tham chiếu đến vàng được gắn (nếu có)
+    private bool playPullFX;
 
     void Start()
     {
@@ -94,6 +95,7 @@ public class HookController : MonoBehaviour
         // Kiểm tra nếu có vật thể đang bị kéo
         if (currentObject != null && PlayerPrefs.GetInt("BuyBomb") > 0)
         {
+            MenuManager.Instance.PlaySound(MenuManager.Instance.bombFX, MenuManager.Instance.canPlayFX);
             PlayerPrefs.SetInt("BuyBomb", PlayerPrefs.GetInt("BuyBomb") - 1);
 
             // Sinh hiệu ứng nổ tại vị trí vật thể
@@ -106,6 +108,7 @@ public class HookController : MonoBehaviour
 
             // Reset trạng thái móc câu
             ResetHook();
+            MenuManager.Instance.PlaySound(MenuManager.Instance.bombFX, false);
         }
     }
 
@@ -141,6 +144,12 @@ public class HookController : MonoBehaviour
 
         if (attached != null)
         {
+            if (!playPullFX)
+            {
+                playPullFX = true;
+                MenuManager.Instance.PlaySound(MenuManager.Instance.pullFX, MenuManager.Instance.canPlayFX);
+            }
+
             // Lấy khối lượng của vàng để làm chậm tốc độ quay về
             float itemWeight = attached.GetComponent<GoldController>().GetGoldWeight();
             if (PlayerPrefs.GetInt("BuyPower") == 1)
@@ -174,6 +183,8 @@ public class HookController : MonoBehaviour
                 }
 
                 attached = null;
+                MenuManager.Instance.PlaySound(MenuManager.Instance.pullFX, false);
+                playPullFX = false;
             }
         }
     }

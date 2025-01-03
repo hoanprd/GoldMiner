@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
 
         //uiManager = FindObjectOfType<UIManager>();
         lvManager = FindObjectOfType<LevelManager>();
+
+        SetScore();
+        UIManager.updateScore = true;
+        UIManager.scoreValue = score;
     }
 
     public void AddScore(int points)
@@ -59,6 +63,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetScore()
+    {
+        score = PlayerPrefs.GetInt("Score");
+    }
+
+    public void UpdateScore()
+    {
+        PlayerPrefs.SetInt("Score", GetScore());
+    }
+
     public int GetScore()
     {
         return score;
@@ -80,9 +94,15 @@ public class GameManager : MonoBehaviour
 
     public void LevelPass()
     {
-        PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
         if (PlayerPrefs.GetInt("Level") < LevelManager.levelEndGame)
         {
+            PlayerPrefs.SetInt("Score", GetScore());
+            PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
+            PlayerPrefs.SetInt("BuySandClock", 0);
+            PlayerPrefs.SetInt("BuyPower", 0);
+            PlayerPrefs.SetInt("BuyDiamondValue", 0);
+            PlayerPrefs.SetInt("BuyLuckyUpValue", 0);
+            PlayerPrefs.SetInt("BuyRockValue", 0);
             SceneManager.LoadScene("ShopScene");
         }
         else
