@@ -1,5 +1,8 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -9,7 +12,7 @@ public class UIManager : MonoBehaviour
     public Text timeText;   // Hiển thị thời gian còn lại
     public Text levelText;
     public Text targetText;
-    public GameObject bombUI, skipButton;
+    public GameObject bombUI, skipButton, endGamePanel, loseGamePanel;
     public Text bombAmongText;
 
     //fix singeton kh khởi tạo UI
@@ -70,10 +73,20 @@ public class UIManager : MonoBehaviour
             if (!GameManager.Instance.IsGameOver && !levelTargetDone)
             {
                 GameManager.Instance.GameOver(); // Kết thúc trò chơi
+                loseGamePanel.SetActive(true);
             }
             else
             {
-                GameManager.Instance.LevelPass();
+                if (PlayerPrefs.GetInt("Level") < LevelManager.levelEndGame - 1)
+                {
+                    GameManager.Instance.LevelPass();
+                }
+                else
+                {
+                    endGamePanel.SetActive(true);
+                    GameManager.Instance.GameOver();
+                    delayGoToMenu();
+                }
             }
         }
     }
@@ -95,6 +108,25 @@ public class UIManager : MonoBehaviour
 
     public void SkipLevel()
     {
-        GameManager.Instance.LevelPass();
+        if (PlayerPrefs.GetInt("Level") < LevelManager.levelEndGame - 1)
+        {
+            GameManager.Instance.LevelPass();
+        }
+        else
+        {
+            endGamePanel.SetActive(true);
+            GameManager.Instance.GameOver();
+            StartCoroutine(delayGoToMenu());
+        }
+    }
+
+    IEnumerator delayGoToMenu()
+    {
+        yield return new WaitForSeconds(2f);
+        PlayerPrefs.SetInt("Level", 0);
+        MenuManager.Instance.PlaySound(MenuManager.Instance.levelBGM, false);
+        Destroy(GameManager.Instance);
+        Destroy(MenuManager.Instance);
+        SceneManager.LoadScene("MenuScene");
     }
 }

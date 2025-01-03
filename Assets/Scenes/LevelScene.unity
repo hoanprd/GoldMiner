@@ -172,6 +172,8 @@ MonoBehaviour:
   targetText: {fileID: 154248945}
   bombUI: {fileID: 1546477665}
   skipButton: {fileID: 1134057568}
+  endGamePanel: {fileID: 2059064040}
+  loseGamePanel: {fileID: 1178030569}
   bombAmongText: {fileID: 818915031}
   timeLimit: 90
 --- !u!1 &149103777
@@ -1983,8 +1985,8 @@ RectTransform:
   - {fileID: 528709122}
   - {fileID: 473903912}
   - {fileID: 1134057569}
-  - {fileID: 1178030570}
   - {fileID: 2059064041}
+  - {fileID: 1178030570}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
