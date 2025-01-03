@@ -105,9 +105,5 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("BuyRockValue", 0);
             SceneManager.LoadScene("ShopScene");
         }
-        else
-        {
-            //Game end;
-        }
     }
 }
