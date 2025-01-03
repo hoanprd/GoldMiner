@@ -55,6 +55,7 @@ public class ShopManager : MonoBehaviour
             scoreText.text = "$" + GameManager.Instance.GetScore().ToString();
             annouText.GetComponent<Text>().text = "Buy success!";
             annouText.SetActive(true);
+            GameManager.Instance.UpdateScore();
             StartCoroutine(delayOffAnnou());
         }
         else if (buyFail)

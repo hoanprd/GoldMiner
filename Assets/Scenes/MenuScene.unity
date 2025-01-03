@@ -1934,6 +1934,10 @@ MonoBehaviour:
   menuBGM: {fileID: 298843204}
   levelBGM: {fileID: 169953390}
   clickFX: {fileID: 2053354136}
+  pullFX: {fileID: 1474732366}
+  bombFX: {fileID: 1791572587}
+  canPlayBGM: 0
+  canPlayFX: 0
 --- !u!1 &1474732364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1980,7 +1984,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
