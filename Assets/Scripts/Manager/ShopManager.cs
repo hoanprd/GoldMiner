@@ -15,13 +15,18 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int[] uniqueNumbers = new int[3]; // Mảng chứa 3 số ngẫu nhiên
-        int count = 0;
+        //int[] uniqueNumbers = new int[3]; // Mảng chứa 3 số ngẫu nhiên
+        //int count = 0;
 
         levelText.text = "Level: " + PlayerPrefs.GetInt("Level").ToString();
         scoreText.text = "$" + GameManager.Instance.GetScore().ToString();
 
-        while (count < 3)
+        for (int i = 0; i < prefabToSpawn.Length; i++)
+        {
+            Instantiate(prefabToSpawn[i], parentObject);
+        }
+
+        /*while (count < 3)
         {
             int randomNumber = Random.Range(0, 6); // Random từ 0 đến 5
 
@@ -43,7 +48,7 @@ public class ShopManager : MonoBehaviour
                 Instantiate(prefabToSpawn[randomNumber], parentObject);
                 count++;
             }
-        }
+        }*/
     }
 
     void Update()

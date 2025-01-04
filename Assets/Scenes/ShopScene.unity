@@ -402,11 +402,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabToSpawn:
   - {fileID: 6810204273881336081, guid: 31425b46d71e4ff4cb04e326d447e0e4, type: 3}
-  - {fileID: 6810204273881336081, guid: 22776f926909b4a4aa211b23793bedbe, type: 3}
   - {fileID: 6810204273881336081, guid: d09a4188c041f784d940c3a01e82e24a, type: 3}
   - {fileID: 6810204273881336081, guid: 73c8159b2b04f6242939a1f857ec713b, type: 3}
-  - {fileID: 6810204273881336081, guid: cc22e82299d807b43a8d3df463b26297, type: 3}
-  - {fileID: 6810204273881336081, guid: 0a0ce14a4216df34c8117a8378c424f2, type: 3}
   parentObject: {fileID: 783913422}
   levelText: {fileID: 91584366}
   scoreText: {fileID: 774959244}

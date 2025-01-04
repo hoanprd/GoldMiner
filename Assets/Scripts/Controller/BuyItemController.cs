@@ -50,7 +50,7 @@ public class BuyItemController : MonoBehaviour
         }
     }
 
-    public void BuyDiamondValue()
+    /*public void BuyDiamondValue()
     {
         if (GameManager.Instance.GetScore() >= costValue)
         {
@@ -90,7 +90,7 @@ public class BuyItemController : MonoBehaviour
         {
             ShopManager.buyFail = true;
         }
-    }
+    }*/
 
     public void BuyInteract()
     {

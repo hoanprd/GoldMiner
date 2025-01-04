@@ -39,9 +39,9 @@ public class GameManager : MonoBehaviour
     {
         if (!IsGameOver) // Chỉ cộng điểm nếu chưa game over
         {
-            if (itemHookingIndex == 2 && PlayerPrefs.GetInt("BuyRockValue") == 1)
+            /*if (itemHookingIndex == 2 && PlayerPrefs.GetInt("BuyRockValue") == 1)
             {
-                //diamond x2
+                //rock x2
                 score += points * 2;
                 itemHookingIndex = 0;
             }
@@ -54,8 +54,10 @@ public class GameManager : MonoBehaviour
             else
             {
                 score += points;
-            }
-            
+            }*/
+
+            score += points;
+
             //uiManager.UpdateScoreText(score); // Cập nhật UI sau khi cộng điểm
             UIManager.updateScore = true;
             UIManager.scoreValue = score;
