@@ -11,6 +11,26 @@ public class MenuManager : MonoBehaviour
     public AudioSource menuBGM, levelBGM, clickFX, pullFX, bombFX;
     public bool canPlayBGM, canPlayFX;
 
+    private void Awake()
+    {
+        StartCoroutine(DisplayBannerWithDelay());
+        //AdsManager.Instance.bannerAds.ShowBannerAd();
+        //AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+    }
+
+    private IEnumerator DisplayBannerWithDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        //AdsManager.Instance.rewardedAds.ShowRewardedAd();
+        AdsManager.Instance.bannerAds.ShowBannerAd();
+        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
+    }
+
+    public void CloseAdsBanner()
+    {
+        AdsManager.Instance.bannerAds.HideBannerAd();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +90,7 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
+        CloseAdsBanner();
         PlaySound(menuBGM, false);
         PlaySound(clickFX, canPlayFX);
         PlaySound(levelBGM, canPlayBGM);
@@ -86,6 +107,7 @@ public class MenuManager : MonoBehaviour
 
     public void Continue()
     {
+        CloseAdsBanner();
         PlaySound(menuBGM, false);
         PlaySound(clickFX, canPlayFX);
         PlaySound(levelBGM, canPlayBGM);

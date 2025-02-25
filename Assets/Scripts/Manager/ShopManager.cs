@@ -15,6 +15,7 @@ public class ShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        AdsManager.Instance.interstitialAds.ShowInterstitialAd();
         //int[] uniqueNumbers = new int[3]; // Mảng chứa 3 số ngẫu nhiên
         //int count = 0;
 

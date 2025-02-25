@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.teamsirenix.odin": {
+      "version": "file:E:/UnityPackage/com.teamsirenix.odin",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "9.1.2",
       "depth": 1,
@@ -91,6 +97,15 @@
         "com.unity.2d.tilemap": "1.0.0",
         "com.unity.modules.tilemap": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ads": {
+      "version": "4.4.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ugui": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
