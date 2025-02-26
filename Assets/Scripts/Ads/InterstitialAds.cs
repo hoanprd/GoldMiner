@@ -48,6 +48,7 @@ public class InterstitialAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsSh
     public void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState showCompletionState)
     {
         Debug.Log("Interstitial Ad Completed");
+        AnalyticsManager.Instance.GoToMenu();
     }
     #endregion
 }

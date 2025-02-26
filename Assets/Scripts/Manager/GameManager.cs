@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using Unity.Services.Core;
+using Unity.Services.Analytics;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -34,6 +36,12 @@ public class GameManager : MonoBehaviour
         UIManager.updateScore = true;
         UIManager.scoreValue = score;
     }
+
+    /*async void Start()
+    {
+        await UnityServices.InitializeAsync();
+        AnalyticsService.Instance.StartDataCollection();
+    }*/
 
     public void AddScore(int points)
     {
@@ -99,12 +107,21 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("Level") < LevelManager.levelEndGame)
         {
             PlayerPrefs.SetInt("Score", GetScore());
+            AnalyticsManager.Instance.LevelDone(PlayerPrefs.GetInt("Level"));
             PlayerPrefs.SetInt("Level", PlayerPrefs.GetInt("Level") + 1);
             PlayerPrefs.SetInt("BuySandClock", 0);
             PlayerPrefs.SetInt("BuyPower", 0);
             PlayerPrefs.SetInt("BuyDiamondValue", 0);
             PlayerPrefs.SetInt("BuyLuckyUpValue", 0);
             PlayerPrefs.SetInt("BuyRockValue", 0);
+            //AnalyticsResult analyticsResult = Analytics.CustomEvent("LevelWin" + PlayerPrefs.GetInt("Level").ToString());
+            //Debug.Log("analyticsResult:" + analyticsResult);
+            /*CustomEvent myEvent = new CustomEvent("level_win")
+            {
+                {"level_pass", PlayerPrefs.GetInt("Level").ToString()},
+            };
+            AnalyticsService.Instance.RecordEvent(myEvent);*/
+
             SceneManager.LoadScene("ShopScene");
         }
     }
