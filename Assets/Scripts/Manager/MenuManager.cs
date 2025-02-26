@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Services.Core;
+using Unity.Services.Analytics;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
@@ -86,6 +88,12 @@ public class MenuManager : MonoBehaviour
         {
             continueButton.SetActive(true);
         }
+
+        /*CustomEvent myEvent = new CustomEvent("log_in")
+            {
+                {"log_to_menu", "log to menu"},
+            };
+        AnalyticsService.Instance.RecordEvent(myEvent);*/
     }
 
     public void NewGame()
